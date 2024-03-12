@@ -87,7 +87,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
             return
         print([str(v) for k, v in models.storage.all().items()
-               if not args or v.__class__.__name__ == args[0]])
+            if not args or v.__class__.__name__ == args[0]])
 
     def do_update(self, arg):
         """Updates an instance based on the
@@ -142,15 +142,17 @@ class HBNBCommand(cmd.Cmd):
             self.do_all(args[0])
         elif args[1] == "count()":
             print(len([v for k, v in models.storage.all().items()
-                       if v.__class__.__name__ == args[0]]))
+                    if v.__class__.__name__ == args[0]]))
         elif args[1].startswith("show("):
             self.do_show(args[0] + " " + args[1][6:-2])
         elif args[1].startswith("destroy("):
             self.do_destroy(args[0] + " " + args[1][9:-2])
         elif args[1].startswith("update("):
             self.do_update(args[0] + " " + args[1][7:-1])
+        elif args[1].startswith("create("):
+            self.do_create(args[0] )
         else:
-            print("*** Unknown syntax:", arg)
+            print("** command not found **")
 
 
 if __name__ == '__main__':
