@@ -3,15 +3,15 @@
 This file inherits from BaseModel
 """
 
-from models.base_model import base_model
+from models.base_model import BaseModel
 
 
-class User(base_model):
+class User(BaseModel):
     """class"""
     # User 
 
     # class attributes
     email = ""
-    password = "
+    password = ""
     first_name = ""
     last_name = ""

@@ -5,11 +5,11 @@ that inherits from BaseModel
 """
 
 
-from models.base_model import base_model
+from models.base_model import BaseModel
 from typing import List
 
 
-class Place(base_model):
+class Place(BaseModel):
     """class"""
     city_id = ''
     user_id = ''

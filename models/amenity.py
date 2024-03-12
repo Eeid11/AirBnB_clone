@@ -4,9 +4,9 @@ Defines  the Amenity model
 and inherits from BaseModel
 """
 
-from models.base_model import base_model
+from models.base_model import BaseModel
 
 
-class Amenity(base_model):
+class Amenity(BaseModel):
     """class"""
     name = ''

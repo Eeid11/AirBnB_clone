@@ -8,8 +8,30 @@ from models.city import City
 from models.amenity import Amenity
 from models.place import Place
 from models.user import User
-from helper import parse_argument
 import models
+import shlex
+import re
+import json
+
+
+def parse_argument(args):
+    """Parse an argument"""
+    data = ""
+    match = re.search(r'{.*}', args)
+    if match:
+        try:
+            data = json.loads(match.group())
+            args = re.sub(r'{.*}', '', args)
+        except json.JSONDecodeError:
+            print("Invalid JSON format")
+    args = shlex.split(args)
+    if data:
+        args.append(data)
+    else:
+        args = [int(arg) if arg.isdigit()
+                else arg
+                for arg in args]
+    return args
 
 classes = {
         "BaseModel": BaseModel,
@@ -23,7 +45,7 @@ classes = {
 
 
 class HBNBCommand(cmd.Cmd):
-"""class"""
+    """class"""
     prompt = "(hbnb) "
 
     def do_create(self, arg):

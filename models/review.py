@@ -5,10 +5,10 @@ from BaseModel
 """
 
 
-from models.base_model import base_model
+from models.base_model import BaseModel
 
 
-class Review(base_model):
+class Review(BaseModel):
     """class"""
 
     place_id = ''

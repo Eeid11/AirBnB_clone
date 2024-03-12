@@ -5,7 +5,7 @@ from datetime import datetime
 import models
 
 
-class base_model:
+class BaseModel:
     """class"""
     def __init__(self, *args, **kwargs):
         """class"""
@@ -58,47 +58,3 @@ class base_model:
     def all(cls):
         """class"""
         return models.storage.find_all(cls.__name__)
-
-    @classmethod
-    def counter(cls):
-        """class"""
-        return len(models.storage.find_all(cls.__name__))
-
-    @classmethod
-    def creation(cls, *args, **kwargs):
-        """class"""
-        new = cls(*args, **kwargs)
-        return new.id
-
-    @classmethod
-    def show(cls, instance_id):
-        """class"""
-        return models.storage.find_by_id(
-            cls.__name__,
-            instance_id
-        )
-
-    @classmethod
-    def destroying(cls, instance_id):
-        """class"""
-        return models.storage.delete_by_id(
-            cls.__name__,
-            instance_id
-        )
-
-    @classmethod
-    def updating(cls, instance_id, *args):
-        """class"""
-        if not len(args):
-            print("** attribute name missing **")
-            return
-        if len(args) == 1 and isinstance(args[0], dict):
-            args = args[0].items()
-        else:
-            args = [args[:2]]
-        for arg in args:
-            models.storage.update_one(
-                cls.__name__,
-                instance_id,
-                *arg
-            )

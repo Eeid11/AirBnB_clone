@@ -5,10 +5,10 @@ inherits from BaseMode
 """
 
 """class"""
-from models.base_model import base_model
+from models.base_model import BaseModel
 
 
-class City(base_model):
+class City(BaseModel):
     """class"""
     state_id = ''
     name = ''
