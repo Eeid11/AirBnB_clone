@@ -1,60 +1,43 @@
 #!/usr/bin/python3
-"""class"""
-from uuid import uuid4
+"""Module for BaseModel class by satamony"""
 from datetime import datetime
+from uuid import uuid4
 import models
 
 
 class BaseModel:
-    """class"""
+    """BaseModel class that defines
+    all common attributes/methods for other classes"""
+
     def __init__(self, *args, **kwargs):
-        """class"""
-
-        if kwargs == {}:
+        """Constructor method for BaseModel class"""
+        if kwargs:
+            for k, v in kwargs.items():
+                if k == "created_at" or k == "updated_at":
+                    setattr(self, k,
+                            datetime.strptime(v, "%Y-%m-%dT%H:%M:%S.%f"))
+                elif k != "__class__":
+                    setattr(self, k, v)
+        else:
             self.id = str(uuid4())
-            self.created_at = datetime.utcnow()
-            self.updated_at = datetime.utcnow()
+            self.created_at = self.updated_at = datetime.now()
             models.storage.new(self)
-            return
-
-        if 'id' not in kwargs:
-            kwargs['id'] = str(uuid4())
-        self.id = kwargs['id']
-
-        for Key, val in kwargs.items():
-            if Key == "__class_":
-                continue
-        if "created_at" in kwargs:
-            self.created_at = datetime.strptime(
-                    kwargs['created_at'],
-                    '%Y-%m-%dT%H:%M:%S.%f')
-        if "updated_at" in kwargs:
-            self.updated_at = datetime.strptime(
-                    kwargs['updated_at'],
-                    '%Y-%m-%dT%H:%M:%S.%f')
 
     def __str__(self):
-        """class"""
-        format = "[{}] ({}) {}"
-        return format.format(
-                type(self).__name__,
-                self.id,
-                self.__dict__)
+        """String representation of BaseModel class"""
+        return f"[{self.__class__.__name__}] ({self.id}) {self.__dict__}"
 
     def save(self):
-        """class"""
-        self.updated_at = datetime.utcnow()
+        """Method to update the public instance
+        attribute updated_at with the current datetime"""
+        self.updated_at = datetime.now()
         models.storage.save()
 
     def to_dict(self):
-        """class"""
-        temp = {**self.__dict__}
-        temp['__class__'] = type(self).__name__
-        temp['created_at'] = self.created_at.strftime('%Y-%m-%dT%H:%M:%S.%f')
-        temp['updated_at'] = self.updated_at.strftime('%Y-%m-%dT%H:%M:%S.%f')
-        return temp
-
-    @classmethod
-    def all(cls):
-        """class"""
-        return models.storage.find_all(cls.__name__)
+        """Method to return a dictionary containing
+        all keys/values of __dict__ of the instance"""
+        new_dict = self.__dict__.copy()
+        new_dict["created_at"] = self.created_at.isoformat()
+        new_dict["updated_at"] = self.updated_at.isoformat()
+        new_dict["__class__"] = self.__class__.__name__
+        return new_dict

@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-"""file"""
 import cmd
 from models.base_model import BaseModel
 from models.state import State
@@ -8,30 +7,8 @@ from models.city import City
 from models.amenity import Amenity
 from models.place import Place
 from models.user import User
+from helper import parse_argument
 import models
-import shlex
-import re
-import json
-
-
-def parse_argument(args):
-    """Parse an argument"""
-    data = ""
-    match = re.search(r'{.*}', args)
-    if match:
-        try:
-            data = json.loads(match.group())
-            args = re.sub(r'{.*}', '', args)
-        except json.JSONDecodeError:
-            print("Invalid JSON format")
-    args = shlex.split(args)
-    if data:
-        args.append(data)
-    else:
-        args = [int(arg) if arg.isdigit()
-                else arg
-                for arg in args]
-    return args
 
 classes = {
         "BaseModel": BaseModel,
@@ -45,11 +22,13 @@ classes = {
 
 
 class HBNBCommand(cmd.Cmd):
-    """class"""
+    """Command line interpreter for HBNB"""
+
     prompt = "(hbnb) "
 
     def do_create(self, arg):
-        """class"""
+        """Creates a new instance of BaseModel,
+        saves it (to the JSON file) and prints the id"""
         if not arg:
             print("** class name missing **")
             return
@@ -62,7 +41,8 @@ class HBNBCommand(cmd.Cmd):
         print(new_instance.id)
 
     def do_show(self, arg):
-        """class"""
+        """Prints the string representation
+        of an instance based on the class name and id"""
         if not arg:
             print("** class name missing **")
             return
@@ -80,7 +60,8 @@ class HBNBCommand(cmd.Cmd):
         print(models.storage.all()[key])
 
     def do_destroy(self, arg):
-        """class"""
+        """Deletes an instance based on the class name and id
+        (save the change into the JSON file)"""
         if not arg:
             print("** class name missing **")
             return
@@ -99,16 +80,19 @@ class HBNBCommand(cmd.Cmd):
         models.storage.save()
 
     def do_all(self, arg):
-        """class"""
+        """Prints all string representation
+        of all instances based or not on the class name"""
         args = arg.split()
         if args and args[0] not in classes:
             print("** class doesn't exist **")
             return
         print([str(v) for k, v in models.storage.all().items()
-            if not args or v.__class__.__name__ == args[0]])
+               if not args or v.__class__.__name__ == args[0]])
 
     def do_update(self, arg):
-        """class"""
+        """Updates an instance based on the
+        class name and id by adding or updating attribute
+        (save the change into the JSON file)"""
         if not arg:
             print("** class name missing **")
             return
@@ -158,7 +142,7 @@ class HBNBCommand(cmd.Cmd):
             self.do_all(args[0])
         elif args[1] == "count()":
             print(len([v for k, v in models.storage.all().items()
-                    if v.__class__.__name__ == args[0]]))
+                       if v.__class__.__name__ == args[0]]))
         elif args[1].startswith("show("):
             self.do_show(args[0] + " " + args[1][6:-2])
         elif args[1].startswith("destroy("):
