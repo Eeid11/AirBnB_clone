@@ -5,13 +5,12 @@ from BaseModel
 """
 
 
-from models.base_model import base_model_11
+from models.base_model import base_model
 
 
-class Review(base_model_11):
-    # Review model
+class Review(base_model):
+    """class"""
 
-    # Attributes
-    place_id: str = ''
-    user_id: str = ''
-    text: str = ''
+    place_id = ''
+    user_id = ''
+    text = ''

@@ -23,13 +23,11 @@ classes = {
 
 
 class HBNBCommand(cmd.Cmd):
-    """Command line interpreter for HBNB"""
-
+"""class"""
     prompt = "(hbnb) "
 
     def do_create(self, arg):
-        """Creates a new instance of BaseModel,
-        saves it (to the JSON file) and prints the id"""
+        """class"""
         if not arg:
             print("** class name missing **")
             return
@@ -42,8 +40,7 @@ class HBNBCommand(cmd.Cmd):
         print(new_instance.id)
 
     def do_show(self, arg):
-        """Prints the string representation
-        of an instance based on the class name and id"""
+        """class"""
         if not arg:
             print("** class name missing **")
             return
@@ -61,8 +58,7 @@ class HBNBCommand(cmd.Cmd):
         print(models.storage.all()[key])
 
     def do_destroy(self, arg):
-        """Deletes an instance based on the class name and id
-        (save the change into the JSON file)"""
+        """class"""
         if not arg:
             print("** class name missing **")
             return
@@ -81,8 +77,7 @@ class HBNBCommand(cmd.Cmd):
         models.storage.save()
 
     def do_all(self, arg):
-        """Prints all string representation
-        of all instances based or not on the class name"""
+        """class"""
         args = arg.split()
         if args and args[0] not in classes:
             print("** class doesn't exist **")
@@ -91,9 +86,7 @@ class HBNBCommand(cmd.Cmd):
             if not args or v.__class__.__name__ == args[0]])
 
     def do_update(self, arg):
-        """Updates an instance based on the
-        class name and id by adding or updating attribute
-        (save the change into the JSON file)"""
+        """class"""
         if not arg:
             print("** class name missing **")
             return

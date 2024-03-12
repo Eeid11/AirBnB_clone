@@ -4,13 +4,11 @@ Defines City model and
 inherits from BaseMode
 """
 
+"""class"""
+from models.base_model import base_model
 
-from models.base_model import base_model_11
 
-
-class City(base_model_11):
-    # City Model
-
-    # Atributes
-    state_id: str = ''
-    name: str = ''
+class City(base_model):
+    """class"""
+    state_id = ''
+    name = ''

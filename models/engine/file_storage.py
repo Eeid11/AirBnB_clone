@@ -9,7 +9,7 @@ It will use JSON format to either serialize and deserialize objects
 import json
 from json.decoder import JSONDecodeError
 from .errors import *
-from models.base_model import base_model_11
+from models.base_model import base_model
 from models.user import User
 from models.state import State
 from models.city import City
@@ -26,7 +26,7 @@ class FileStorage:
 
     """class private varaibles"""
     __objects: dict = {}
-    __file_path: str = 'file.json'
+    __file_path = 'file.json'
     models = (
             "BaseModel",
             "User", "City", "State", "Place",

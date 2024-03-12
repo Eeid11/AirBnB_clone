@@ -4,11 +4,10 @@ This file defines  stateModel class
 """
 
 
-from models.base_model import base_model_11
+from models.base_model import base_model
 
 
-class State(base_model_11):
-    # state model
+class State(base_model):
+    """class"""
 
-    # Atrributes
-    name: str = ''
+    name = ''
